@@ -14,8 +14,7 @@ const spotifyApi = new SpotifyWebApi({redirectUri: process.env.REDRIECTURI2, cli
 
 const authUrl = spotifyApi.createAuthorizeURL(scopes, state);
 
-const opn = require("opn");
-//opn(authUrl);
+
 
 const express = require("express");
 const bodyParser = require("body-parser");

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lyricify</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+    * {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    h1 {
+      color: red
+    }
+
+    body {
+      background-color: rgb(24, 24, 24);
+    }
+
+
+    .spotifyDarkColorBG {
+      background-color: rgb(18, 18, 18) !important;
+    }
+
+    .spotifyDarkColor {
+      color: rgb(18, 18, 18) !important;
+    }
+
+    .spotifyGreenColorBG {
+      background-color: rgb(29, 185, 84) !important;
+    }
+
+    .spotifyGreenColor {
+      color: rgb(29, 185, 84) !important;
+    }
+
+    .loginButton {
+      color: white !important;
+      border-radius: 35px;
+      font-size: 1.15rem;
+    }
+
+    .navbar-brand {
+      font-size: 1.8rem;
+    }
+
+    .lyrics-container {
+      border: 1px solid rgb(29, 185, 84);
+      max-width: 480px;
+      max-height: 800px;
+      overflow: auto;
+      padding: 5px
+    }
+
+    .lyrics-container p {
+      color: white !important;
+    }
+
+    .currently-playing h4 {
+      color: white !important;
+    }
+
+
+    .info-text p {
+      color:white
+    }
+    
+    .hidden {
+      display: none;
+    }
+
+
+
+    /* Scroll bar */
+    /* width */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      border-radius: 10px;
+
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: rgb(29, 185, 84);
+      border-radius: 10px;
+      border: 0.5px solid black;
+
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgb(24, 155, 70);
+    }
+  </style>
+
+
+</head>
+
+<body onunload="destroyConnection()">
+  <!-- As a heading -->
+  <nav class="navbar navbar-dark bg-dark spotifyDarkColorBG">
+    <span class="navbar-brand m-auto h1 spotifyGreenColor">Lyricify</span>
+  </nav>
+
+
+  <div class="content">
+    <div id="logincontainer" class="container text-center">
+      <div class="info-text">
+        <p>Welcome to Lyricify! <br>
+          This site is used to display the lyrics of the song you are listening to
+        </p>
+      </div>
+      <div>
+        <button class="btn loginButton spotifyGreenColorBG" onclick="window.location.replace(window.location.href + 'login')">
+          Login!
+        </button>
+      </div>
+    </div>
+    <!-- End of login promt -->
+    <!-- Lyrics box -->
+    <div id="lyriccontainer" class="container text-center hidden">
+      <div class="currently-playing">
+        <h3 class="spotifyGreenColor">Currently Playing: </h3>
+        <h4 id="currentlyPlaying">Searching for lyrics</h4>
+      </div>
+      <div class="lyrics-container mx-auto">
+        <p id="lyricsText"></p>
+      </div>
+      <div>
+        <button class="btn loginButton my-2 spotifyGreenColorBG" onclick="window.location.replace(window.location.href + 'logout')">
+          Logout!
+        </button>
+      </div>
+      <p class="mt-1" style="color: whitesmoke; font-size: 0.8rem;">Lyrics refresh every 20 seconds, this is to reduce requests made to the Spotify API</p>
+    </div>
+    <!-- End of Lyrics box -->
+    <div class="text-center mt-1">
+      <h5 style="color:red; margin-bottom: 10rem; font-size:0.7rem">
+        This site is in no way affiliated with Spotify! This is a personal project of mine, that I decided to share.
+      </h5>
+    </div>
+  </div>
+  <!-- Login promt -->
+  
+  <!-- Footer -->
+  <footer class="page-footer fixed-bottom spotifyGreenColor spotifyDarkColorBG">
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center pt-3">Made By:
+      <a class="spotifyGreenColor" href="https://twitter.com/gloriousdonald"><u>Miro <i>"Donald"</i> Laukka</u></a>
+    </div>
+    <!-- Copyright -->
+
+  </footer>
+  <!-- Footer -->
+</body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+  integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+  integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+  integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+  <script>
+  
+    var urlParams = new URLSearchParams(window.location.search);
+    var x = window.location.href.split('/')
+
+    if(urlParams.has('id')){
+      window.location.replace(`${x[0]}//${x[2]}/`);
+      sessionStorage.setItem('loggedin', '1')
+    }
+  
+    
+
+    if(urlParams.has('logout')){
+      sessionStorage.clear()
+      window.location.replace(`${x[0]}//${x[2]}/`);
+    }
+
+    if(sessionStorage.loggedin == "1"){
+      document.getElementById('logincontainer').classList.add('hidden');
+      document.getElementById('lyriccontainer').classList.remove('hidden')
+      $(window).on("unload", function(e) {
+        $.get('/logout')
+      });
+
+    }
+
+    var xmlhttp = new XMLHttpRequest();
+    var url = `${x[0]}//${x[2]}/getlyrics`;
+  
+    xmlhttp.onreadystatechange = function () {
+      try {
+          if(this.responseText.length < 2){
+
+          return
+        }else{
+          var resJson = JSON.parse(this.responseText);
+
+        }
+        if (resJson.status == "404") { // 404 is sent if lyrics not found
+          document.getElementById('lyricsText').innterHTML = "Lyrics not found"
+        } else if (resJson.status == "200") {
+          let lyrics = resJson.lyrics
+          let artist = resJson.artist
+          let songName = resJson.songName
+          document.getElementById('lyricsText').innerHTML = lyrics
+          document.getElementById('currentlyPlaying').innerHTML = `${songName} by: ${artist}`
+    
+        } else {
+          document.getElementById('lyricsText').innterHTML = "Lyrics not found"
+        }
+      } catch (error) {
+        console.log(error)
+      }
+      
+    };
+    
+    function refreshData() {
+      x = 15;  // 5 Seconds
+      xmlhttp.open("GET", url, true);
+      xmlhttp.send();
+  
+      setTimeout(refreshData, x * 1000);
+    }
+    
+    refreshData(); // execute function
+    
+    
+
+
+
+
+  </script>
+
+</html>

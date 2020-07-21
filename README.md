@@ -32,7 +32,5 @@ We set the access_token and refresh_token from the express session to the spotif
 
 #### `/`
 Send the `index.html` file from `/public` directory
-
-
-
+\n\n\n
 ![Image Preview](https://i.imgur.com/UEGYU24.png)

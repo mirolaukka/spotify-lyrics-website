@@ -33,6 +33,10 @@ We set the access_token and refresh_token from the express session to the spotif
 #### `/`
 Send the `index.html` file from `/public` directory
 
+### Known Issues :warning:
+
+ * **If lyrics are not found, a message is not showing up in the browser.**
+ * **Sometimes it takes longer than 20 seconds to refresh the lyrics.**
 
 ## Preview
 

@@ -4,7 +4,7 @@ Website that prompts you to login using your spotify account and then show the l
 Working website running on Google Cloud Platform: https://spotify-lyrics-283323.ew.r.appspot.com
 
 
-### Dependencies Used: :tools:
+### Dependencies Used: :tools: 
   * **body-parser**
   * **cors**
   * **dotenv** | Handle all the API keys and secrets.

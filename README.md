@@ -35,7 +35,6 @@ Send the `index.html` file from `/public` directory
 
 ### Known Issues :warning:
 
- * **If lyrics are not found, a message is not showing up in the browser.**
  * **Sometimes it takes longer than 20 seconds to refresh the lyrics.**
 
 ## Preview

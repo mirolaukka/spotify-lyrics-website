@@ -14,7 +14,8 @@ const spotifyApi = new SpotifyWebApi({redirectUri: process.env.REDRIECTURI2, cli
 
 const authUrl = spotifyApi.createAuthorizeURL(scopes, state);
 
-
+const opn = require("opn");
+//opn(authUrl);
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -41,6 +42,7 @@ let port = process.env.PORT;
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
+//app.use(express.static(path.join(__dirname, "public")));
 
 
 /*
@@ -78,7 +80,6 @@ app.get("/callback", function (req, res) {
 //starts the server and listens for requests
 app.listen(port, function () {
   console.log(`api running on port ${port}`);
-  console.log(`Access localhost:${port} to see the lyrics for the currently played song`);
 });
 
 app.get("/getlyrics", function (req, res) {
@@ -97,7 +98,7 @@ app.get("/getlyrics", function (req, res) {
     };
     geniusLyricsApi.getLyrics(options).then(lyrics => {
       if (lyrics == null) {
-        res.json({status: "404", message: "Lyrics not found"});
+        res.json({status: "404", message: "Lyrics not found", artist: artist, songName: name});
       } else {
         lyrics = lyrics.replace(/(?:\r\n|\r|\n)/g, "<br/>");
         res.json({status: "200", message: "successful", lyrics: lyrics, artist: artist, songName: name});
@@ -105,15 +106,13 @@ app.get("/getlyrics", function (req, res) {
     }).catch(err => {
       res.json({status: "500", message: "Something went wrong"});
     });
-  }).catch(err => res.json({status: "500", message: "Something went wrong"}));
+  }).catch(err => res.json({status: "502", message: "Couldn't get playback"}));
 }, function (err) {
   // clientId, clientSecret and refreshToken has been set on the api object previous to this call.
   spotifyApi.refreshAccessToken().then(function (data) {
-    console.log("The access token has been refreshed!");
 
     // Save the access token so that it's used in future calls
     req.session['access_token'] = data.body["access_token"]
-    console.log("[*******]")
     res.redirect(req.originalUrl);
   }, function (err) {
     console.log("Could not refresh access token", err);

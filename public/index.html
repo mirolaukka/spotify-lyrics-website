@@ -21,30 +21,32 @@
     }
 
     body {
-      background-color: rgb(24, 24, 24);
+      background-color: #000000;
+      height: 100%;
     }
 
 
     .spotifyDarkColorBG {
-      background-color: rgb(18, 18, 18) !important;
+      background-color: #000000 !important;
     }
 
     .spotifyDarkColor {
-      color: rgb(18, 18, 18) !important;
+      color: #000000 !important;
     }
 
     .spotifyGreenColorBG {
-      background-color: rgb(29, 185, 84) !important;
+      background-color: #1DB954 !important;
     }
 
     .spotifyGreenColor {
-      color: rgb(29, 185, 84) !important;
+      color: #1DB954 !important;
     }
 
     .loginButton {
       color: white !important;
       border-radius: 35px;
-      font-size: 1.15rem;
+      font-size: 1.3rem;
+      font-weight: 600;
     }
 
     .navbar-brand {
@@ -52,9 +54,9 @@
     }
 
     .lyrics-container {
-      border: 1px solid rgb(29, 185, 84);
+      border: 0.05px solid #1DB954;
       max-width: 480px;
-      max-height: 800px;
+      max-height: 580px;
       overflow: auto;
       padding: 5px
     }
@@ -69,14 +71,16 @@
 
 
     .info-text p {
-      color:white
+      color: white
     }
-    
+
     .hidden {
       display: none;
     }
-
-
+    /*
+    .logincontainer .loginButton {
+      margin-top: 30vh
+    }*/
 
     /* Scroll bar */
     /* width */
@@ -92,7 +96,7 @@
 
     /* Handle */
     ::-webkit-scrollbar-thumb {
-      background: rgb(29, 185, 84);
+      background: #1DB954;
       border-radius: 10px;
       border: 0.5px solid black;
 
@@ -100,7 +104,7 @@
 
     /* Handle on hover */
     ::-webkit-scrollbar-thumb:hover {
-      background: rgb(24, 155, 70);
+      background: #1DB954;
     }
   </style>
 
@@ -108,57 +112,72 @@
 </head>
 
 <body onunload="destroyConnection()">
+
   <!-- As a heading -->
   <nav class="navbar navbar-dark bg-dark spotifyDarkColorBG">
-    <span class="navbar-brand m-auto h1 spotifyGreenColor">Lyricify</span>
+    <a class="navbar-brand mx-auto" href="#">
+      <img class="" src="https://i.imgur.com/82UhzwC.png" alt="Lyricify" height="72" width="256">
+    </a>
   </nav>
 
 
   <div class="content">
-    <div id="logincontainer" class="container text-center">
+    <div id="logincontainer" class="logincontainer container text-center">
       <div class="info-text">
-        <p>Welcome to Lyricify! <br>
-          This site is used to display the lyrics of the song you are listening to
+        <p><br>
+          Hey you! Are you tired of not knowing the lyrics for a song you are vibing to? Me too.. <br>
+          Simply login with you Spotify Account and start playing music, simple as that. <br><br><br><br>
+          We do not collect or share any of your information, you can find the source code over on <a
+            class="spotifyGreenColor" href="https://github.com/mirolaukka/spotify-lyrics-website">GitHub</a>.
+          <br> <b>The only thing we ask from you upon login is the current song you're listening to.</b><br>
+          <br> After you leave the site or logout manually, your session will be closed down and <br> any information
+          about your account will be deleted.
         </p>
       </div>
       <div>
-        <button class="btn loginButton spotifyGreenColorBG" onclick="window.location.replace(window.location.href + 'login')">
-          Login!
+        <button class="btn btn-lg loginButton spotifyGreenColorBG my-5"
+          onclick="window.location.replace(window.location.href + 'login')">
+          Login with Spotify
         </button>
       </div>
     </div>
     <!-- End of login promt -->
+
     <!-- Lyrics box -->
     <div id="lyriccontainer" class="container text-center hidden">
       <div class="currently-playing">
-        <h3 class="spotifyGreenColor">Currently Playing: </h3>
+        <h3 class="spotifyGreenColor hidden" id="curPlayText">Currently Playing: </h3>
         <h4 id="currentlyPlaying">Searching for lyrics</h4>
       </div>
       <div class="lyrics-container mx-auto">
         <p id="lyricsText"></p>
       </div>
       <div>
-        <button class="btn loginButton my-2 spotifyGreenColorBG" onclick="window.location.replace(window.location.href + 'logout')">
+        <button class="btn loginButton my-2 spotifyGreenColorBG"
+          onclick="window.location.replace(window.location.href + 'logout')">
           Logout!
         </button>
       </div>
-      <p class="mt-1" style="color: whitesmoke; font-size: 0.8rem;">Lyrics refresh every 20 seconds, this is to reduce requests made to the Spotify API</p>
+      <p class="mt-1" style="color: whitesmoke; font-size: 0.8rem;">Lyrics refresh every 20 seconds, this is to reduce
+        requests made to the Spotify API</p>
     </div>
     <!-- End of Lyrics box -->
-    <div class="text-center mt-1">
-      <h5 style="color:red; margin-bottom: 10rem; font-size:0.7rem">
-        This site is in no way affiliated with Spotify! This is a personal project of mine, that I decided to share.
-      </h5>
-    </div>
+
   </div>
   <!-- Login promt -->
-  
+
   <!-- Footer -->
   <footer class="page-footer fixed-bottom spotifyGreenColor spotifyDarkColorBG">
 
     <!-- Copyright -->
-    <div class="footer-copyright text-center pt-3">Made By:
-      <a class="spotifyGreenColor" href="https://twitter.com/gloriousdonald"><u>Miro <i>"Donald"</i> Laukka</u></a>
+    <div class="footer-copyright text-center pt-3">
+      <h5 style="color:red; font-size:0.7rem">
+        This site is in no way affiliated with Spotify!
+      </h5>
+      Made By:<a class="spotifyGreenColor" href="https://twitter.com/gloriousdonald"><u> Miro Laukka</u></a>
+      <br>
+      <p> <a class="spotifyGreenColor" href="https://github.com/mirolaukka/spotify-lyrics-website">Source code on
+          <u>GitHub</u></a></p>
     </div>
     <!-- Copyright -->
 
@@ -173,77 +192,83 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
   integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
-  <script>
-  
-    var urlParams = new URLSearchParams(window.location.search);
-    var x = window.location.href.split('/')
+<script>
 
-    if(urlParams.has('id')){
-      window.location.replace(`${x[0]}//${x[2]}/`);
-      sessionStorage.setItem('loggedin', '1')
-    }
-  
-    
+  var urlParams = new URLSearchParams(window.location.search);
+  var x = window.location.href.split('/')
 
-    if(urlParams.has('logout')){
-      sessionStorage.clear()
-      window.location.replace(`${x[0]}//${x[2]}/`);
-    }
+  if (urlParams.has('id')) {
+    window.location.replace(`${x[0]}//${x[2]}/`);
+    sessionStorage.setItem('loggedin', '1')
+  }
 
-    if(sessionStorage.loggedin == "1"){
-      document.getElementById('logincontainer').classList.add('hidden');
-      document.getElementById('lyriccontainer').classList.remove('hidden')
-      $(window).on("unload", function(e) {
-        $.get('/logout')
-      });
 
-    }
 
-    var xmlhttp = new XMLHttpRequest();
-    var url = `${x[0]}//${x[2]}/getlyrics`;
-  
-    xmlhttp.onreadystatechange = function () {
-      try {
-          if(this.responseText.length < 2){
+  if (urlParams.has('logout')) {
+    sessionStorage.clear()
+    window.location.replace(`${x[0]}//${x[2]}/`);
+  }
 
-          return
-        }else{
-          var resJson = JSON.parse(this.responseText);
+  if (sessionStorage.loggedin == "1") {
+    document.getElementById('logincontainer').classList.add('hidden');
+    document.getElementById('lyriccontainer').classList.remove('hidden')
+    $(window).on("unload", function (e) {
+      $.get('/logout')
+    });
 
-        }
-        if (resJson.status == "404") { // 404 is sent if lyrics not found
-          document.getElementById('lyricsText').innterHTML = "Lyrics not found"
-        } else if (resJson.status == "200") {
-          let lyrics = resJson.lyrics
-          let artist = resJson.artist
-          let songName = resJson.songName
-          document.getElementById('lyricsText').innerHTML = lyrics
-          document.getElementById('currentlyPlaying').innerHTML = `${songName} by: ${artist}`
-    
-        } else {
-          document.getElementById('lyricsText').innterHTML = "Lyrics not found"
-        }
-      } catch (error) {
-        console.log(error)
+  }
+
+  var xmlhttp = new XMLHttpRequest();
+  var url = `${x[0]}//${x[2]}/getlyrics`;
+
+  xmlhttp.onreadystatechange = function () {
+    try {
+      if (this.responseText.length < 2) {
+
+        return
+      } else {
+        var resJson = JSON.parse(this.responseText);
       }
-      
-    };
-    
-    function refreshData() {
-      x = 15;  // 5 Seconds
-      xmlhttp.open("GET", url, true);
-      xmlhttp.send();
-  
-      setTimeout(refreshData, x * 1000);
+      console.log(resJson)
+      if (resJson.status == "404") { // 404 is sent if lyrics not found
+        let artist = resJson.artist
+        let songName = resJson.songName
+        document.getElementById('lyricsText').innerHTML = "Lyrics not found"
+        document.getElementById('currentlyPlaying').innerHTML = `${songName} by ${artist}`
+        document.getElementById('curPlayText').classList.add('hidden')
+      } else if (resJson.status == "200") {
+        let lyrics = resJson.lyrics
+        let artist = resJson.artist
+        let songName = resJson.songName
+        document.getElementById('lyricsText').innerHTML = lyrics
+        document.getElementById('currentlyPlaying').innerHTML = `${songName} by ${artist}`
+        document.getElementById('curPlayText').classList.remove('hidden')
+
+
+      } else {
+        document.getElementById('lyricsText').innterHTML = "Lyrics not found"
+      }
+    } catch (error) {
+      console.log(error)
     }
-    
-    refreshData(); // execute function
-    
-    
+
+  };
+
+  function refreshData() {
+    x = 20;  // 5 Seconds
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+
+    setTimeout(refreshData, x * 1000);
+  }
+
+  setTimeout(refreshData(), 4000); // execute function
 
 
 
 
-  </script>
+
+
+</script>
 
 </html>
